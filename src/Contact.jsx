@@ -1,8 +1,9 @@
 import React,{useState} from 'react'
+import axios from 'axios'
 
 export const Contact = () => {
 
-const [input , setinput] = useState({
+const [input , setInput] = useState({ 
     fullname:'',
     phone:'',
     email:'',
@@ -12,7 +13,7 @@ const [input , setinput] = useState({
   const textevent =(event)=>{
       const {name , value}= event.target;
 
-      setinput((preval)=>{
+      setInput((preval)=>{
         return{
             ...preval , [name]:value ,
         };
@@ -20,11 +21,17 @@ const [input , setinput] = useState({
 
   }
 
-   const submitevent =(events)=>{
-       events.priventDefault();
-       alert(`Hello ${input.fullname} , Thank You for being here , I hope You've Enjoyed `);
-
-   }
+   const submitevents =(e)=>{
+       e.preventDefault()
+      const newdatabody={
+        fullname:input.fullname,
+        phone:input.phone,
+        email:input.eamil,
+        msg:input.msg,
+      }
+      
+      axios.post("http://localhost:3001/Contact", newdatabody)
+   };
 
     return (
         <>
@@ -35,7 +42,7 @@ const [input , setinput] = useState({
                 <div className="row">
 
                     <div className="col-md-6 col-10 mx-auto">
-                        <form onSubmit={submitevent} >
+                        <form onSubmit={submitevents} >
                             <div class="mb-2">
                                 <label
                                     for="exampleFormControlInput1" class="form-label">FullName
